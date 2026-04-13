@@ -66,6 +66,8 @@
 	title={`${SITE.name} — ${SITE.tagline}`}
 	description={SITE.description}
 	path="/"
+	ogEyebrow="Trading Card Vault"
+	ogTitle="Run your card shop like a national retailer."
 	jsonLd={[organizationSchema, softwareSchema, faqSchema]}
 />
 

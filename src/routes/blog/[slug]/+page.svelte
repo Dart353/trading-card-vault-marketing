@@ -34,6 +34,8 @@
 	description={post.excerpt}
 	path={`/blog/${post.slug}`}
 	type="article"
+	ogEyebrow={`${post.tags[0] ?? 'Blog'} · ${post.readingMinutes} min read`}
+	ogTitle={post.title}
 	jsonLd={articleSchema}
 />
 

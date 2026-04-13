@@ -12,6 +12,8 @@
 	title="Privacy Policy"
 	description="How Trading Card Vault collects, uses, and protects the personal information of shop owners, staff, and customers."
 	path="/legal/privacy"
+	ogEyebrow="Legal"
+	ogTitle="Privacy Policy"
 />
 
 <PageHero

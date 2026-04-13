@@ -22,9 +22,9 @@
 	}
 </script>
 
-<section class="border-border/60 border-y bg-card/40">
+<section class="border-border/60 overflow-hidden border-y bg-card/40">
 	<div class="mx-auto grid max-w-7xl gap-12 px-6 py-20 lg:grid-cols-2 lg:gap-16 lg:px-8 lg:py-28">
-		<div>
+		<div class="min-w-0">
 			<p class="text-gold text-xs font-mono tracking-widest uppercase">Embeddable storefront</p>
 			<h2 class="mt-2 text-3xl font-bold sm:text-4xl">
 				One line of HTML. Your inventory, on your domain.
@@ -63,7 +63,7 @@
 		</div>
 
 		<!-- Mock widget preview -->
-		<div class="border-border/60 bg-background rounded-2xl border p-5 shadow-xl">
+		<div class="border-border/60 bg-background min-w-0 overflow-hidden rounded-2xl border p-5 shadow-xl">
 			<div class="border-border/60 flex items-center gap-2 border-b pb-3">
 				<div class="flex gap-1.5">
 					<span class="size-2.5 rounded-full bg-rose-400/70"></span>
@@ -84,13 +84,13 @@
 				</div>
 				<div class="grid grid-cols-3 gap-3">
 					{#each FEATURED_CARDS as card (card.scryfallId)}
-						<div class="border-border/60 bg-card rounded-lg border p-2 text-xs">
+						<div class="border-border/60 bg-card min-w-0 rounded-lg border p-2 text-xs">
 							<div class="mb-2">
 								<CardImage {card} size="small" class="shadow-none" />
 							</div>
 							<div class="truncate font-medium">{card.name}</div>
-							<div class="text-muted-foreground flex items-center justify-between">
-								<span class="font-mono text-[10px] tracking-wider uppercase">{card.set}</span>
+							<div class="text-muted-foreground flex items-center justify-between gap-2">
+								<span class="truncate font-mono text-[10px] tracking-wider uppercase">{card.set}</span>
 								<span class="text-foreground font-semibold tabular-nums">${card.priceUsd}</span>
 							</div>
 						</div>

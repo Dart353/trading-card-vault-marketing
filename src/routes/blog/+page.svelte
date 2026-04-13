@@ -17,6 +17,8 @@
 	title="Blog"
 	description="Practical writing about running a local game shop — operations, pricing, storefront, and everything in between."
 	path="/blog"
+	ogEyebrow="Blog"
+	ogTitle="Writing for people who run card shops."
 />
 
 <PageHero

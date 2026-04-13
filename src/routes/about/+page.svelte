@@ -59,6 +59,8 @@
 	title="About"
 	description="Trading Card Vault was built by and for local game shops. Meet the team and the mission."
 	path="/about"
+	ogEyebrow="About"
+	ogTitle="Every local game shop deserves the tools of a national retailer."
 />
 
 <PageHero

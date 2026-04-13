@@ -54,6 +54,8 @@
 	title="Storefront widget"
 	description="Embed your live Trading Card Vault inventory on your own website with one line of HTML. No marketplace skim, no redirect, no lost brand."
 	path="/widget"
+	ogEyebrow="Embeddable storefront"
+	ogTitle="Your inventory, on your domain. One line of HTML."
 />
 
 <PageHero

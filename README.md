@@ -46,7 +46,7 @@ node build
 - [ ] **Contact form backend** — `src/routes/api/contact/+server.ts` currently logs to console. Wire to Brevo (or whichever transactional provider) and add env vars above.
 - [ ] **Booking link** — `SITE.app.bookDemoUrl` in `src/lib/content/site.ts` points at a placeholder `cal.com` URL.
 - [ ] **Social handles** — confirm final Twitter/LinkedIn URLs in `src/lib/content/site.ts`.
-- [ ] **OG image** — drop a real `static/og-default.png` (1200×630) before launch.
+- [ ] **OG image** — dynamic 1200×630 PNGs are generated per page by `/og/+server.ts` (satori + resvg, Inter + Fraunces fonts in `static/fonts/`). Swap to custom hero art by passing an `image="..."` prop to `<SeoHead>` on any page that needs it.
 - [ ] **Favicon** — replace `static/favicon.svg` with final branded mark.
 - [ ] **MTG imagery rights** — `src/lib/content/cards.ts` hotlinks Scryfall's public image CDN for real printings used in the hero and widget preview. Review the [Wizards of the Coast Fan Content Policy](https://company.wizards.com/en/legal/fancontentpolicy) and Scryfall's image guidelines before production launch; swap to original stylized art if needed.
 - [ ] **ROI assumption** — `TIME_SAVINGS_RATIO` in `RoiCalculator.svelte` is a ballpark. Validate against pilot-shop telemetry before we make this number the headline of a paid-ads landing page.

@@ -22,6 +22,8 @@
 	title="Contact"
 	description="Questions, demo requests, or feedback — write us or book a 20-minute call."
 	path="/contact"
+	ogEyebrow="Contact"
+	ogTitle="Talk to someone who knows card shops."
 />
 
 <PageHero

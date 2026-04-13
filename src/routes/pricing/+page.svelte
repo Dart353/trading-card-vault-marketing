@@ -80,6 +80,8 @@
 	title="Pricing"
 	description="Simple, flat pricing for local game shops. Starter, Pro, or Enterprise — no transaction fees, no skim."
 	path="/pricing"
+	ogEyebrow="Pricing"
+	ogTitle="Flat pricing. No transaction fees."
 	jsonLd={productSchemas}
 />
 

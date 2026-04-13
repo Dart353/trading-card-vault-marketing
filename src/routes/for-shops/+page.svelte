@@ -71,6 +71,8 @@
 	title="For local game shop owners"
 	description="The tools and workflows a national retailer uses, sized for one-to-five-location LGS. Honest numbers, honest tradeoffs, no SaaS fluff."
 	path="/for-shops"
+	ogEyebrow="For LGS owners"
+	ogTitle="The tools of a national retailer, for your LGS."
 />
 
 <PageHero

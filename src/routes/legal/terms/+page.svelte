@@ -10,6 +10,8 @@
 	title="Terms of Service"
 	description="The terms under which shops subscribe to and use Trading Card Vault."
 	path="/legal/terms"
+	ogEyebrow="Legal"
+	ogTitle="Terms of Service"
 />
 
 <PageHero eyebrow="Legal" title="Terms of Service" />

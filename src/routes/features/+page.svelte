@@ -83,6 +83,8 @@
 	title="Every feature of Trading Card Vault"
 	description="AI card scanning, live Scryfall pricing, multi-shop inventory, an embeddable storefront widget, order fulfillment, and team roles — all in one product built for local game shops."
 	path="/features"
+	ogEyebrow="Product tour"
+	ogTitle="Every tool a modern LGS actually needs."
 />
 
 <PageHero
