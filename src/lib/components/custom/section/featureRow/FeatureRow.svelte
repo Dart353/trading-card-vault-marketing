@@ -47,29 +47,35 @@
 	</div>
 
 	<!--
-		Stylized "app screenshot" frame holding a trio of real Magic cards
-		served from Scryfall's CDN. TODO: swap the outer frame to a true
-		product screenshot once design exports are available.
+		Stylized "app screenshot" frame — browser chrome over a trio of real
+		Magic cards served from Scryfall's CDN. TODO: swap for real product
+		screenshots once design exports are available.
 	-->
 	<div
-		class="border-border/60 from-primary/10 bg-card relative aspect-[4/3] overflow-hidden rounded-2xl border bg-gradient-to-br to-transparent p-6 shadow-lg"
+		class="border-border/60 bg-card relative min-w-0 overflow-hidden rounded-2xl border shadow-xl"
 	>
-		<div class="bg-grid absolute inset-0 opacity-40"></div>
-		<div class="relative flex h-full flex-col justify-between gap-4">
-			<div class="flex items-center justify-between">
-				<div class="bg-background/60 text-muted-foreground rounded-md px-2 py-1 font-mono text-[10px] tracking-wider uppercase backdrop-blur">
-					{feature.slug}
-				</div>
-				<div class="flex gap-1.5">
-					<span class="size-2 rounded-full bg-rose-400/70"></span>
-					<span class="size-2 rounded-full bg-amber-400/70"></span>
-					<span class="size-2 rounded-full bg-emerald-400/70"></span>
-				</div>
+		<div
+			class="border-border/60 bg-background/60 flex items-center gap-3 border-b px-4 py-2.5 backdrop-blur"
+		>
+			<div class="flex gap-1.5">
+				<span class="size-2.5 rounded-full bg-rose-400/70"></span>
+				<span class="size-2.5 rounded-full bg-amber-400/70"></span>
+				<span class="size-2.5 rounded-full bg-emerald-400/70"></span>
 			</div>
+			<div
+				class="bg-muted text-muted-foreground mx-auto min-w-0 max-w-[70%] truncate rounded px-3 py-0.5 font-mono text-[10px] tracking-wider"
+			>
+				app.tcvault.app/{feature.slug}
+			</div>
+			<div class="w-[42px] shrink-0"></div>
+		</div>
 
-			<div class="grid grid-cols-3 gap-3">
+		<div class="from-primary/10 relative bg-gradient-to-br to-transparent p-6">
+			<div class="bg-grid absolute inset-0 opacity-40"></div>
+
+			<div class="relative grid grid-cols-3 gap-3">
 				{#each cardTrio as card, cardIndex (card.scryfallId)}
-					<div class="flex flex-col gap-1.5">
+					<div class="flex min-w-0 flex-col gap-1.5">
 						<CardImage
 							{card}
 							size="small"
@@ -78,8 +84,8 @@
 								cardIndex === 1 && '-translate-y-2'
 							)}
 						/>
-						<div class="text-muted-foreground flex items-center justify-between px-0.5 text-[10px]">
-							<span class="font-mono tracking-wider uppercase">{card.set}</span>
+						<div class="text-muted-foreground flex items-center justify-between gap-2 px-0.5 text-[10px]">
+							<span class="truncate font-mono tracking-wider uppercase">{card.set}</span>
 							<span class="text-foreground font-semibold tabular-nums">${card.priceUsd}</span>
 						</div>
 					</div>
