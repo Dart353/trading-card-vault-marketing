@@ -1,41 +1,60 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { Button } from '$lib/components/shadcn/ui/button/index.js';
 	import * as Tabs from '$lib/components/shadcn/ui/tabs/index.js';
 	import Copy from '@lucide/svelte/icons/copy';
 	import Check from '@lucide/svelte/icons/check';
-	import Search from '@lucide/svelte/icons/search';
 	import PageHero from '$lib/components/custom/section/pageHero/PageHero.svelte';
 	import CtaBand from '$lib/components/custom/section/ctaBand/CtaBand.svelte';
 	import SeoHead from '$lib/components/custom/seo/seoHead/SeoHead.svelte';
-	import CardImage from '$lib/components/custom/illustration/cardImage/CardImage.svelte';
-	import { FEATURED_CARDS } from '$lib/content/cards.js';
 	import { SITE } from '$lib/content/site.js';
 
-	const HTML_SNIPPET = `<script src="https://cdn.tcvault.app/widget.js" async><\/script>
-<card-vault-search
-  shop="your-shop-slug"
-  theme="dark"
-  accent="#3A6FF1"
-></card-vault-search>`;
+	const WIDGET_SCRIPT_URL = 'https://admin.tcvault.app/widget/card-vault-widget.js';
+	// TODO: This is a public demo key. Confirm it is scoped to read-only
+	// public-catalog endpoints and is rotatable before launch — it will be
+	// indexed in search-engine caches.
+	const WIDGET_API_KEY = '721f98c31023d4c279f38d4cb3f8e9e5eeee1d70c8fff991c5ce6639bf57fa45';
+	const WIDGET_MARKUP = `<card-vault-search api-key="${WIDGET_API_KEY}"></card-vault-search>`;
 
-	const WORDPRESS_SNIPPET = `[card_vault_search shop="your-shop-slug" theme="dark"]`;
+	let isWidgetReady = $state(false);
+
+	onMount(() => {
+		if (typeof customElements !== 'undefined' && customElements.get('card-vault-search')) {
+			isWidgetReady = true;
+			return;
+		}
+
+		const existing = document.querySelector(`script[src="${WIDGET_SCRIPT_URL}"]`);
+		if (existing) {
+			waitForDefinition();
+			return;
+		}
+
+		const script = document.createElement('script');
+		script.src = WIDGET_SCRIPT_URL;
+		script.async = true;
+		script.onload = waitForDefinition;
+		script.onerror = () => {
+			console.error('[card-vault-widget] Failed to load widget script');
+		};
+		document.head.appendChild(script);
+	});
+
+	function waitForDefinition() {
+		if (typeof customElements === 'undefined') return;
+		customElements.whenDefined('card-vault-search').then(() => {
+			isWidgetReady = true;
+		});
+	}
+
+	const HTML_SNIPPET = `<script src="${WIDGET_SCRIPT_URL}"><\/script>
+<card-vault-search api-key="${WIDGET_API_KEY}"></card-vault-search>`;
+
+	const WORDPRESS_SNIPPET = `[card_vault_search api-key="${WIDGET_API_KEY}"]`;
 
 	const SHOPIFY_SNIPPET = `<!-- In your Shopify theme: sections/card-vault.liquid -->
-{{ 'https://cdn.tcvault.app/widget.js' | script_tag: defer: true }}
-<card-vault-search shop="{{ shop.permanent_domain | split: '.' | first }}" theme="dark"></card-vault-search>`;
-
-	let selectedFilter = $state('All sets');
-	const FILTERS = ['All sets', 'Modern Horizons', 'LOTR', 'NM only', 'Mythic'];
-
-	let searchTerm = $state('');
-
-	const visibleCards = $derived(
-		searchTerm.trim().length === 0
-			? FEATURED_CARDS
-			: FEATURED_CARDS.filter((card) =>
-					card.name.toLowerCase().includes(searchTerm.toLowerCase())
-				)
-	);
+{{ '${WIDGET_SCRIPT_URL}' | script_tag }}
+<card-vault-search api-key="${WIDGET_API_KEY}"></card-vault-search>`;
 
 	let copiedKey: string | null = $state(null);
 
@@ -65,86 +84,44 @@
 />
 
 <section class="mx-auto max-w-7xl px-6 py-16 lg:px-8">
-	<div class="border-border/60 bg-card overflow-hidden rounded-3xl border shadow-xl">
+	<div class="border-border/60 bg-card relative overflow-hidden rounded-3xl border shadow-xl">
 		<div class="border-border/60 flex items-center gap-2 border-b px-4 py-3 text-xs">
 			<div class="flex gap-1.5">
 				<span class="size-2.5 rounded-full bg-rose-400/70"></span>
 				<span class="size-2.5 rounded-full bg-amber-400/70"></span>
 				<span class="size-2.5 rounded-full bg-emerald-400/70"></span>
 			</div>
-			<div class="bg-muted text-muted-foreground mx-auto rounded px-3 py-1 font-mono tracking-wider">
-				manaleakgames.com/store
+			<div
+				class="bg-muted text-muted-foreground mx-auto rounded px-3 py-1 font-mono tracking-wider"
+			>
+				yourshop.com/store
 			</div>
 		</div>
 
-		<div class="grid gap-0 lg:grid-cols-[260px_1fr]">
-			<aside class="border-border/60 bg-background/40 border-r p-6">
-				<h2 class="text-muted-foreground text-xs font-semibold tracking-widest uppercase">
-					Filters
-				</h2>
-				<div class="mt-4 space-y-1.5">
-					{#each FILTERS as filter (filter)}
-						<button
-							type="button"
-							onclick={() => (selectedFilter = filter)}
-							class={`block w-full rounded-md px-3 py-1.5 text-left text-sm transition ${selectedFilter === filter ? 'bg-primary text-primary-foreground' : 'hover:bg-muted text-muted-foreground'}`}
-						>
-							{filter}
-						</button>
-					{/each}
+		<!--
+			Live <card-vault-search> web component. The script is injected on
+			mount; until customElements upgrades it, we render a small loader
+			so the page does not look broken.
+		-->
+		<div class="relative min-h-[520px] p-4 sm:p-6 lg:p-8">
+			{#if !isWidgetReady}
+				<div
+					class="text-muted-foreground absolute inset-0 flex flex-col items-center justify-center gap-3 text-sm"
+				>
+					<div
+						class="border-primary/60 size-6 animate-spin rounded-full border-2 border-t-transparent"
+					></div>
+					<span>Loading live storefront…</span>
 				</div>
-
-				<h2 class="text-muted-foreground mt-8 text-xs font-semibold tracking-widest uppercase">
-					Condition
-				</h2>
-				<ul class="text-muted-foreground mt-3 space-y-2 text-sm">
-					{#each ['NM', 'LP', 'MP', 'HP'] as condition (condition)}
-						<li class="flex items-center gap-2">
-							<span class="border-border size-3.5 rounded border"></span>
-							{condition}
-						</li>
-					{/each}
-				</ul>
-			</aside>
-
-			<div class="p-6 lg:p-8">
-				<div class="relative">
-					<Search class="text-muted-foreground absolute top-1/2 left-3 size-4 -translate-y-1/2" />
-					<input
-						type="search"
-						bind:value={searchTerm}
-						placeholder="Search for a card, set, or artist…"
-						class="border-border/60 bg-background focus-visible:ring-ring/60 w-full rounded-lg border py-2.5 pr-4 pl-10 text-sm outline-none focus-visible:ring-2"
-					/>
-				</div>
-
-				<p class="text-muted-foreground mt-3 text-xs">
-					{visibleCards.length} result{visibleCards.length === 1 ? '' : 's'} — live inventory refresh
-				</p>
-
-				<div class="mt-5 grid grid-cols-2 gap-4 md:grid-cols-3">
-					{#each visibleCards as card (card.scryfallId)}
-						<div class="border-border/60 bg-card group rounded-xl border p-3 transition hover:shadow-lg">
-							<CardImage {card} size="small" class="shadow-none transition group-hover:scale-[1.02]" />
-							<div class="mt-2.5">
-								<div class="truncate text-sm font-medium">{card.name}</div>
-								<div class="text-muted-foreground flex items-center justify-between text-xs">
-									<span class="font-mono tracking-wider uppercase">{card.set} · {card.collectorNumber}</span>
-									<span class="text-foreground font-semibold tabular-nums">${card.priceUsd}</span>
-								</div>
-								<button
-									type="button"
-									class="bg-primary text-primary-foreground mt-3 w-full rounded-md py-1.5 text-xs font-medium hover:bg-primary/90"
-								>
-									Add to cart
-								</button>
-							</div>
-						</div>
-					{/each}
-				</div>
-			</div>
+			{/if}
+			{@html WIDGET_MARKUP}
 		</div>
 	</div>
+
+	<p class="text-muted-foreground mt-3 text-center text-xs">
+		Live inventory served by Trading Card Vault — this is the same widget you embed on your shop's
+		site.
+	</p>
 </section>
 
 <section id="customize" class="mx-auto max-w-7xl scroll-mt-24 px-6 py-20 lg:px-8">

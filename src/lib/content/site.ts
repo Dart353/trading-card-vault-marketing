@@ -32,8 +32,8 @@ export const SITE: SiteConfig = {
 		linkedin: 'https://www.linkedin.com/company/trading-card-vault'
 	},
 	app: {
-		signInUrl: 'https://admin.tcvault.app/login',
-		signUpUrl: 'https://admin.tcvault.app/register',
+		signInUrl: 'https://admin.tcvault.app/auth/login',
+		signUpUrl: 'https://admin.tcvault.app/auth/login',
 		// TODO: replace with real booking link (Cal.com / Calendly / HubSpot).
 		bookDemoUrl: 'https://cal.com/tcvault/demo'
 	}

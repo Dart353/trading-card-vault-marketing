@@ -5,9 +5,9 @@
 	import CardImage from '$lib/components/custom/illustration/cardImage/CardImage.svelte';
 	import { FEATURED_CARDS } from '$lib/content/cards.js';
 
-	const SNIPPET = `<!-- Embed this one line on any page of your shop's website -->
-<script src="https://cdn.tcvault.app/widget.js" async><\/script>
-<card-vault-search shop="your-shop-slug" theme="dark"></card-vault-search>`;
+	const SNIPPET = `<!-- Embed these two lines on any page of your shop's website -->
+<script src="https://admin.tcvault.app/widget/card-vault-widget.js"><\/script>
+<card-vault-search api-key="721f98c31023d4c279f38d4cb3f8e9e5eeee1d70c8fff991c5ce6639bf57fa45"></card-vault-search>`;
 
 	let isCopied = $state(false);
 
