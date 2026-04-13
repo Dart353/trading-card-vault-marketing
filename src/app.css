@@ -1,0 +1,190 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+@layer base {
+	*,
+	::after,
+	::before,
+	::backdrop,
+	::file-selector-button {
+		border-color: var(--color-border, currentcolor);
+	}
+}
+
+/* -----------------------------------------------------------
+ Trading Card Vault — marketing palette
+ Dark-first. Deep slate/indigo base + electric mana-blue accent
+ + warm gold for premium/pricing moments.
+----------------------------------------------------------- */
+
+:root {
+	--radius: 0.75rem;
+
+	--background: oklch(0.985 0.005 250);
+	--foreground: oklch(0.17 0.04 265);
+	--card: oklch(1 0 0);
+	--card-foreground: oklch(0.17 0.04 265);
+	--popover: oklch(1 0 0);
+	--popover-foreground: oklch(0.17 0.04 265);
+
+	--primary: oklch(0.52 0.19 255); /* mana blue */
+	--primary-foreground: oklch(0.99 0 0);
+
+	--secondary: oklch(0.96 0.01 255);
+	--secondary-foreground: oklch(0.2 0.04 265);
+
+	--muted: oklch(0.965 0.01 255);
+	--muted-foreground: oklch(0.5 0.03 260);
+
+	--accent: oklch(0.94 0.04 255);
+	--accent-foreground: oklch(0.2 0.04 265);
+
+	--gold: oklch(0.82 0.14 85); /* premium accent */
+	--gold-foreground: oklch(0.2 0.04 265);
+
+	--destructive: oklch(0.577 0.245 27.325);
+	--destructive-foreground: oklch(0.99 0 0);
+
+	--border: oklch(0.92 0.015 255);
+	--input: oklch(0.92 0.015 255);
+	--ring: oklch(0.52 0.19 255);
+}
+
+.dark {
+	--background: oklch(0.14 0.025 265); /* deep slate/indigo */
+	--foreground: oklch(0.975 0.005 250);
+	--card: oklch(0.18 0.03 265);
+	--card-foreground: oklch(0.975 0.005 250);
+	--popover: oklch(0.18 0.03 265);
+	--popover-foreground: oklch(0.975 0.005 250);
+
+	--primary: oklch(0.72 0.17 245); /* glowing mana blue */
+	--primary-foreground: oklch(0.12 0.03 265);
+
+	--secondary: oklch(0.24 0.03 265);
+	--secondary-foreground: oklch(0.97 0.005 250);
+
+	--muted: oklch(0.22 0.025 265);
+	--muted-foreground: oklch(0.68 0.02 255);
+
+	--accent: oklch(0.27 0.05 260);
+	--accent-foreground: oklch(0.97 0.005 250);
+
+	--gold: oklch(0.82 0.14 85);
+	--gold-foreground: oklch(0.12 0.03 265);
+
+	--destructive: oklch(0.63 0.22 25);
+	--destructive-foreground: oklch(0.985 0 0);
+
+	--border: oklch(1 0 0 / 10%);
+	--input: oklch(1 0 0 / 12%);
+	--ring: oklch(0.72 0.17 245);
+}
+
+@theme inline {
+	--radius-sm: calc(var(--radius) - 4px);
+	--radius-md: calc(var(--radius) - 2px);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) + 4px);
+	--radius-2xl: calc(var(--radius) + 8px);
+
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-muted: var(--muted);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-popover: var(--popover);
+	--color-popover-foreground: var(--popover-foreground);
+	--color-card: var(--card);
+	--color-card-foreground: var(--card-foreground);
+	--color-border: var(--border);
+	--color-input: var(--input);
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-secondary: var(--secondary);
+	--color-secondary-foreground: var(--secondary-foreground);
+	--color-accent: var(--accent);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-destructive: var(--destructive);
+	--color-destructive-foreground: var(--destructive-foreground);
+	--color-ring: var(--ring);
+	--color-gold: var(--gold);
+	--color-gold-foreground: var(--gold-foreground);
+
+	--font-sans:
+		'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+		Arial, sans-serif;
+	--font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+}
+
+@layer base {
+	* {
+		@apply border-border;
+	}
+	html {
+		scroll-behavior: smooth;
+	}
+	body {
+		@apply bg-background text-foreground;
+		font-family: var(--font-sans);
+		font-feature-settings: 'cv11', 'ss01';
+	}
+	h1,
+	h2,
+	h3 {
+		font-family: var(--font-display);
+		letter-spacing: -0.02em;
+	}
+}
+
+/* Scanner beam loop used in the hero card mockup */
+@keyframes scanner-beam {
+	0% {
+		transform: translateY(-100%);
+		opacity: 0;
+	}
+	10% {
+		opacity: 1;
+	}
+	90% {
+		opacity: 1;
+	}
+	100% {
+		transform: translateY(100%);
+		opacity: 0;
+	}
+}
+.scanner-beam {
+	animation: scanner-beam 2.8s ease-in-out infinite;
+}
+
+@keyframes grid-float {
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-8px);
+	}
+}
+.card-float {
+	animation: grid-float 6s ease-in-out infinite;
+}
+
+/* Soft grid background pattern */
+.bg-grid {
+	background-image:
+		linear-gradient(to right, color-mix(in oklch, var(--border) 70%, transparent) 1px, transparent 1px),
+		linear-gradient(to bottom, color-mix(in oklch, var(--border) 70%, transparent) 1px, transparent 1px);
+	background-size: 48px 48px;
+}
+
+/* Radial glow under hero */
+.bg-hero-glow {
+	background: radial-gradient(
+		60% 50% at 50% 0%,
+		color-mix(in oklch, var(--primary) 25%, transparent) 0%,
+		transparent 70%
+	);
+}
